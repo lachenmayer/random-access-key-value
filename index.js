@@ -185,7 +185,7 @@ module.exports = function randomAccessKeyValue(db, prefix, options) {
               key,
               value,
             })
-            return next(bytesWritten)
+            return next(bytesToWrite)
           })
         }
       }
