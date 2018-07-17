@@ -180,6 +180,15 @@ module.exports = function randomAccessKeyValue(db, prefix, options) {
             const start = relativePage * pageSize
             const end = start + bytesToWrite
             const bytesWritten = req.data.copy(value, offset, start, end)
+            if (bytesWritten < bytesToWrite) {
+              // the buffer was not big enough, allocate a new one.
+              value = Buffer.alloc(
+                value.length + (bytesToWrite - bytesWritten),
+                value
+              )
+              const retryBytes = req.data.copy(value, offset, start, end)
+              assert(retryBytes === bytesToWrite, 'should write all bytes')
+            }
             ops.push({
               type: 'put',
               key,
