@@ -1,0 +1,29 @@
+{
+  "name": "random-access-key-value",
+  "version": "0.1.0",
+  "description": "Makes a random-access-storage instance out of any LevelDB-compatible key-value store.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "random-access-storage",
+    "leveldb",
+    "key-value",
+    "dat"
+  ],
+  "author": "harry lachenmayer <harrylachenmayer@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "random-access-storage": "^1.3.0",
+    "random-access-test": "https://github.com/lachenmayer/random-access-test#filename-clash",
+    "uint64be": "^2.0.2"
+  },
+  "devDependencies": {
+    "hyperdb": "^3.2.0",
+    "hypertrie": "^1.0.0",
+    "levelup": "^3.1.1",
+    "memdown": "^3.0.0",
+    "random-access-memory": "^3.0.0"
+  }
+}
