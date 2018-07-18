@@ -125,6 +125,7 @@ module.exports = function randomAccessKeyValue(db, prefix, options) {
       //       pad with \0 if offset > 0
       //       write buffer
 
+      const data = req.data
       const start = req.offset
       const end = req.offset + req.size
       const startPage = Math.floor(start / pageSize)
@@ -177,17 +178,20 @@ module.exports = function randomAccessKeyValue(db, prefix, options) {
             } catch (err) {
               return cb(err)
             }
-            const start = relativePage * pageSize
-            const end = start + bytesToWrite
-            const bytesWritten = req.data.copy(value, offset, start, end)
+            const dataStart = relativePage * pageSize
+            const dataEnd = dataStart + bytesToWrite
+            const bytesWritten = data.copy(value, offset, dataStart, dataEnd)
             if (bytesWritten < bytesToWrite) {
               // the buffer was not big enough, allocate a new one.
-              value = Buffer.alloc(
-                value.length + (bytesToWrite - bytesWritten),
-                value
+              const newSize =
+                Math.max(offset, value.length) + (bytesToWrite - bytesWritten)
+              const newValue = Buffer.alloc(newSize, value)
+              const retryBytes = data.copy(newValue, offset, dataStart, dataEnd)
+              value = newValue
+              assert(
+                retryBytes === bytesToWrite,
+                'should write all bytes in new buffer'
               )
-              const retryBytes = req.data.copy(value, offset, start, end)
-              assert(retryBytes === bytesToWrite, 'should write all bytes')
             }
             ops.push({
               type: 'put',
