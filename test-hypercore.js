@@ -40,8 +40,6 @@ test('data & tree contain the same content after some appends', t => {
       actual.tree.read(0, expectedTreeSize, (err, actualTree) => {
         t.error(err)
         t.deepEqual(expectedTree, actualTree)
-        console.log(expectedTree.toString('hex'))
-        console.log(actualTree.toString('hex'))
         t.end()
       })
     })
