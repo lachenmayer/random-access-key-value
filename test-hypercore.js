@@ -45,3 +45,14 @@ test('data & tree contain the same content after some appends', t => {
     })
   })
 })
+
+test('append loads', t => {
+  const db = levelup(memdown())
+  const feed = hypercore(file => rakv(db, file))
+  t.plan(100000)
+  for (let i = 0; i < 100000; i++) {
+    feed.append('boop', err => {
+      t.error(err)
+    })
+  }
+})
