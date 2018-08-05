@@ -4,7 +4,7 @@
   "description": "Makes a random-access-storage instance out of any LevelDB-compatible key-value store.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js && node test-hypercore.js"
+    "test": "node test/random-access-test.js && node test/hypercore.js && node test/edge-cases.js"
   },
   "keywords": [
     "random-access-storage",

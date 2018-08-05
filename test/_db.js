@@ -1,7 +1,4 @@
-const test = require('random-access-test')
-const randomAccess = require('./')
-
-function hypertrie() {
+exports.hypertrie = function hypertrie() {
   const hypertrie = require('hypertrie')
   const ram = require('random-access-memory')
   const db = hypertrie(ram)
@@ -17,7 +14,7 @@ function hypertrie() {
   }
 }
 
-function hyperdb() {
+exports.hyperdb = function hyperdb() {
   const hyperdb = require('hyperdb')
   const ram = require('random-access-memory')
   const db = hyperdb(ram, {
@@ -35,23 +32,8 @@ function hyperdb() {
   }
 }
 
-function leveldb() {
+exports.leveldb = function leveldb() {
   const levelup = require('levelup')
   const memdown = require('memdown')
   return levelup(memdown())
 }
-
-const db = leveldb()
-
-test(
-  function(name, options, callback) {
-    callback(randomAccess(db, name, options))
-  },
-  {
-    reopen: true,
-    content: false,
-    del: false,
-    writable: true,
-    size: false,
-  }
-)

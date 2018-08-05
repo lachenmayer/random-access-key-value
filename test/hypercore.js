@@ -1,10 +1,10 @@
 const test = require('tape')
 const hypercore = require('hypercore')
-const levelup = require('levelup')
-const memdown = require('memdown')
 const ram = require('random-access-memory')
 
-const rakv = require('./')
+const rakv = require('../')
+
+const { leveldb } = require('./_db')
 
 test('data & tree contain the same content after some appends', t => {
   const expected = {}
@@ -14,7 +14,7 @@ test('data & tree contain the same content after some appends', t => {
     expected[file] = storage
     return storage
   })
-  const db = levelup(memdown())
+  const db = leveldb()
   const actualFeed = hypercore(file => {
     const storage = rakv(db, file)
     actual[file] = storage
@@ -36,7 +36,7 @@ test('data & tree contain the same content after some appends', t => {
       })
     })
     const expectedTreeSize = 32 + 40 * 5
-    expected.tree.read(0, expectedTreeSize, (err, expectedTree) => {
+    expected.tree.read(0, expectedTreeSize, (_err, expectedTree) => {
       actual.tree.read(0, expectedTreeSize, (err, actualTree) => {
         t.error(err)
         t.deepEqual(expectedTree, actualTree)
@@ -47,10 +47,10 @@ test('data & tree contain the same content after some appends', t => {
 })
 
 test('append loads', t => {
-  const db = levelup(memdown())
+  const db = leveldb()
   const feed = hypercore(file => rakv(db, file))
-  t.plan(100000)
-  for (let i = 0; i < 100000; i++) {
+  t.plan(10000)
+  for (let i = 0; i < 10000; i++) {
     feed.append('boop', err => {
       t.error(err)
     })
