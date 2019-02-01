@@ -2,6 +2,8 @@
 
 **⚠️ EXPERIMENTAL ️️️️️️⚠️**
 
+[![Build Status](https://travis-ci.com/lachenmayer/random-access-key-value.svg?branch=master)](https://travis-ci.com/lachenmayer/random-access-key-value)
+
 Create a [random-access-storage](https://github.com/random-access-storage/random-access-storage) instance from any key-value store.
 
 ```
