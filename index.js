@@ -1,4 +1,4 @@
-const File = require('./lib/File')
+const File = require('./lib/file')
 const randomAccess = require('random-access-storage')
 
 module.exports = function randomAccessKeyValue(db, prefix, options) {
