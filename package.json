@@ -1,6 +1,6 @@
 {
   "name": "random-access-key-value",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Makes a random-access-storage instance out of any LevelDB-compatible key-value store.",
   "main": "index.js",
   "scripts": {
